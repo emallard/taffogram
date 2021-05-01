@@ -6,6 +6,7 @@ var numRows = 10;
 var marginForNumbers = 50;
 
 function init() {
+	document.getElementById("success").style.display = 'none';
 	initPlayer();
 	initEvents();
 	initTargets();
@@ -42,6 +43,7 @@ function initEvents() {
 
 		player[i][j] = 1 - player[i][j];
 		draw();
+		testSuccess();
 	})
 }
 
@@ -61,9 +63,12 @@ function draw() {
 	c.width = 2 * marginForNumbers + numColumns * colSize;
 	c.height = 2 * marginForNumbers + numRows * rowSize;
 
-	ctx.clearRect(0, 0, c.width, c.height);
+	ctx.fillStyle = 'black';
+	ctx.fillRect(0, 0, c.width, c.height);
+
 
 	// lines
+	ctx.strokeStyle = 'white';
 	for (var i = 0; i < numColumns + 1; ++i) {
 		ctx.moveTo(i * colSize + marginForNumbers, marginForNumbers);
 		ctx.lineTo(i * colSize + marginForNumbers, marginForNumbers + numRows * rowSize);
@@ -75,11 +80,10 @@ function draw() {
 		ctx.lineTo(marginForNumbers + numColumns * colSize, j * rowSize + marginForNumbers);
 	}
 
-
 	ctx.stroke();
 
 	// blocks
-	ctx.fillStyle = 'black';
+	ctx.fillStyle = 'white';
 	for (var i = 0; i < numRows; ++i) {
 		for (var j = 0; j < numColumns; ++j) {
 			if (player[i][j] == 1) {
@@ -105,7 +109,7 @@ function draw() {
 }
 
 
-var target = [
+var target0 = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
 	[0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
@@ -114,6 +118,18 @@ var target = [
 	[0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
 	[0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
 	[0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+];
+var target = [
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
@@ -152,5 +168,18 @@ function initTargets() {
 		}
 		targetColumns[j] = text;
 	}
+}
+
+function testSuccess() {
+	for (var i = 0; i < numRows; ++i) {
+		for (var j = 0; j < numColumns; ++j) {
+			if (target[i][j] != player[i][j])
+				return;
+		}
+	}
+	let div = document.getElementById('success');
+	div.style.display = 'block';
+	var canvas = document.getElementById("canvas");
+	canvas.style.display = 'none';
 }
 
