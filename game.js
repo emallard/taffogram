@@ -22,9 +22,13 @@ function initPlayer() {
 	}
 }
 
+var isSuccess = false;
 function initEvents() {
 	var c = document.getElementById("canvas");
 	c.addEventListener('mousedown', e => {
+
+		if (isSuccess)
+			return;
 
 		var rect = canvas.getBoundingClientRect()
 		var x = e.clientX - rect.left;
@@ -109,19 +113,19 @@ function draw() {
 }
 
 
-var target0 = [
+var target = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-	[0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
-	[0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
-	[0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-	[0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
-	[0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
-	[0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
+	[0, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+	[0, 1, 0, 0, 0, 0, 1, 1, 1, 0],
+	[0, 1, 0, 0, 0, 0, 1, 0, 1, 0],
+	[0, 1, 0, 0, 0, 0, 1, 0, 1, 0],
+	[0, 1, 0, 0, 0, 0, 1, 1, 1, 0],
+	[0, 1, 0, 0, 0, 0, 1, 0, 0, 0],
+	[0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
-var target = [
+var target0 = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -177,9 +181,13 @@ function testSuccess() {
 				return;
 		}
 	}
-	let div = document.getElementById('success');
-	div.style.display = 'block';
-	var canvas = document.getElementById("canvas");
-	canvas.style.display = 'none';
+	isSuccess = true;
+
+	setTimeout(() => {
+		let div = document.getElementById('success');
+		div.style.display = 'block';
+		var canvas = document.getElementById("canvas");
+		canvas.style.display = 'none';
+	}, 3000);
 }
 
